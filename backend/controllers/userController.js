@@ -4,13 +4,17 @@ const User = require("../models/userModel");
 const { generateToken } = require("../middleware/authMiddleware");
 const { addImage } = require("./imageController");
 const imageModel = require("../models/imageModel");
+const { authCookieName } = require("../config/cookie");
 
 //@desc create new user
 //@route POST api/users
 //@access public
 const createUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log(req.body);
+  console.log(name);
+  console.log(email);
+  console.log(password);
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Username, email or password not entered");
@@ -61,13 +65,21 @@ const logInUser = asyncHandler(async (req, res) => {
 
   if (user && (await bcrypt.compare(password, user.password))) {
     const image = await imageModel.findById(user.icon);
+    const token = generateToken(user._id);
 
-    res.status(200).json({
-      _id: user.id,
-      name: user.name,
-      token: generateToken(user._id),
-      icon: image,
-    });
+    res
+      .cookie(authCookieName, token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      })
+      .status(200)
+      .json({
+        _id: user.id,
+        name: user.name,
+        token: token,
+        icon: image,
+      });
   } else {
     res.status(400);
     throw new Error("Wrong username or password");
@@ -109,7 +121,14 @@ const checkUser = asyncHandler(async (req, res) => {
 //@route GET api/users/me
 //@access private
 const checkMe = asyncHandler(async (req, res) => {
-  console.log(res);
+  const { _id: userId } = req.user;
+
+  userModel
+    .findOne({ _id: userId }, { password: 0, __v: 0 })
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch();
 });
 
 module.exports = { createUser, logInUser, checkUsers, checkUser, checkMe };

@@ -1,0 +1,69 @@
+<form [formGroup]="form" (ngSubmit)="register()">
+    <h2>Register</h2>
+    
+    <div>
+        <input 
+        type="text" 
+        name="username" 
+        id="username" 
+        placeholder="Enter Username" 
+        formControlName="username"
+        />
+        <ng-container *ngIf="form.get('username')?.touched">
+            <p *ngIf="form.get('username')?.errors?.['required']">Username is required</p>
+            <p *ngIf="form.get('username')?.errors?.['minlength']">Username must be at least 5 characters</p>
+        </ng-container>
+    </div>
+
+    <div>
+        <input 
+        type="email" 
+        name="email" 
+        id="email" 
+        placeholder="Enter Email"
+        formControlName="email"
+        />
+
+        <ng-container *ngIf="form.get('email')?.touched">
+            <p *ngIf="form.get('email')?.errors?.['required']">Email is required</p>
+        </ng-container>
+    </div>
+
+    <ng-container formGroupName="passwordGroup">
+        <div>
+            <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            placeholder="Enter Password" 
+            formControlName="password"
+            />
+            <ng-container *ngIf="passwordGroup?.get('password')?.touched">
+                <p *ngIf="passwordGroup?.get('password')?.errors?.['required']">Password is required</p>
+                <p *ngIf="passwordGroup?.get('password')?.errors?.['minlength']">Password must be at least 7 characters</p>
+            </ng-container>
+        </div>
+        <div>
+            <input 
+            type="password" 
+            name="rePass" 
+            id="rePass" 
+            placeholder="Reenter Password" 
+            formControlName="rePass"
+            />
+            <ng-container *ngIf="passwordGroup?.get('rePass')?.touched">
+                <p *ngIf="passwordGroup?.errors?.['matchPasswordsValidator'] ||
+                passwordGroup?.get('rePass')?.errors?.['required']">Passwords don't match</p>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <button
+        [disabled]="form.invalid"
+        [style]="{backgroundColor: form.invalid?'gray':'blue'}"
+    >
+        Create Account
+    </button>
+
+    <p>Have an account: <a routerLink="/login">Log in</a></p>
+</form>

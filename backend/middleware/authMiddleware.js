@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const { authCookieName } = require("../config/cookie");
 
 const authenticateToken = asyncHandler(async (req, res, next) => {
   let token;
@@ -12,7 +13,8 @@ const authenticateToken = asyncHandler(async (req, res, next) => {
     try {
       //get token from header
       token = req.headers.authorization.split(" ")[1];
-
+      //token = req.cookies[authCookieName];
+      console.log(token);
       //verify token
       decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
@@ -33,7 +35,7 @@ const authenticateToken = asyncHandler(async (req, res, next) => {
   }
   if (!token) {
     res.status(401);
-    throw new Error("Not Authorized");
+    throw new Error("Not Authorized You gots no token");
   }
 });
 

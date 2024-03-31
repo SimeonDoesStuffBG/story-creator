@@ -1,0 +1,8 @@
+export interface UserForAuth{
+    name: string,
+    email:string,
+    password: string,
+    token: string,
+    _id: string
+}
+

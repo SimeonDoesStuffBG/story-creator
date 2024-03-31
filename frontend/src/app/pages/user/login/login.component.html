@@ -1,0 +1,38 @@
+<form [formGroup]="form" (ngSubmit)="login()">
+    <h2>Log In</h2>
+
+    <div>
+        <input 
+        type="text" 
+        name="usernameOrEmail" 
+        id="usernameOrEmail" 
+        placeholder="Enter Username or Email" 
+        formControlName="usernameOrEmail"
+        />
+        <ng-container *ngIf="form.get('usernameOrEmail')?.touched">
+            <p *ngIf="form.get('usernameOrEmail')?.errors?.['required']">Username or Email is required</p>
+        </ng-container>
+    </div>
+
+    <div>
+        <input 
+        type="password" 
+        name="password" 
+        id="password" 
+        placeholder="Enter Password" 
+        formControlName="password"
+        />
+        <ng-container *ngIf="form.get('password')?.touched">
+            <p *ngIf="form.get('password')?.errors?.['required']">Password is required</p>
+        </ng-container>
+    </div>
+
+    <button
+        [disabled]="form.invalid"
+        [style]="{backgroundColor: form.invalid?'gray':'blue'}"
+    >
+        Log In
+    </button>
+
+    <p>Don't have an account: <a routerLink="/register">Create Account</a></p>
+</form>

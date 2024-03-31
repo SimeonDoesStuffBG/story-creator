@@ -1,18 +1,29 @@
-import { NgModule } from "@angular/core";
-import { AppComponent } from "./app.component";
-import { GlobalsModule } from "./Globals/globals.module";
-import { RouterModule } from "@angular/router";
-import { routes } from "./app.routes";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { GlobalsModule } from './components/globals.module';
+import { PagesModule } from './pages/pages.module';
+import { UserModule } from './pages/user/user.module';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthComponent } from './auth/auth.component';
+import { appInterceptorProvider } from './app.interceptors';
 
 @NgModule({
-    declarations:
-    [
-        AppComponent
-    ],
-    imports: [
-        GlobalsModule,
-        RouterModule.forRoot(routes)
-    ],
-    exports: [RouterModule]
+  declarations: [
+    AppComponent,
+    AuthComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    GlobalsModule,
+    PagesModule,
+    UserModule
+  ],
+  providers: [appInterceptorProvider],
+  bootstrap: [AppComponent]
 })
-export class AppModule{}
+export class AppModule { }
