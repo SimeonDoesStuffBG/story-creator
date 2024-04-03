@@ -121,14 +121,8 @@ const checkUser = asyncHandler(async (req, res) => {
 //@route GET api/users/me
 //@access private
 const checkMe = asyncHandler(async (req, res) => {
-  const { _id: userId } = req.user;
-
-  userModel
-    .findOne({ _id: userId }, { password: 0, __v: 0 })
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch();
+  const user = req.user;
+  res.status(200).json(user);
 });
 
 module.exports = { createUser, logInUser, checkUsers, checkUser, checkMe };

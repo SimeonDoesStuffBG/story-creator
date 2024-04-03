@@ -5,16 +5,12 @@ const { authCookieName } = require("../config/cookie");
 
 const authenticateToken = asyncHandler(async (req, res, next) => {
   let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
+  if (req.headers.cookie && req.headers.cookie.startsWith(authCookieName)) {
     try {
       //get token from header
-      token = req.headers.authorization.split(" ")[1];
-      //token = req.cookies[authCookieName];
-      console.log(token);
+
+      token = req.headers.cookie?.split("=")[1];
+
       //verify token
       decoded = await jwt.verify(token, process.env.JWT_SECRET);
 

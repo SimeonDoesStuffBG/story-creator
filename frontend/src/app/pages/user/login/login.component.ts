@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
@@ -8,7 +8,7 @@ import { UserService } from '../user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   form:FormGroup = this.fb.group({
     usernameOrEmail: ['', [Validators.required]],
     password: ['', [Validators.required]]
@@ -31,5 +31,11 @@ export class LoginComponent {
       .subscribe(()=>{
         this.router.navigate(['/'])
       })
-  }
+    }
+
+    ngOnInit(): void {
+      if(this.userService.user){
+        this.router.navigate(['/']);
+      }
+    }
 }

@@ -36,12 +36,19 @@ export class UserService implements OnDestroy{
     login(usernameOrEmail: string, password: string){
         return this.http
             .post<UserForAuth>('/api/users/login', {name: usernameOrEmail, password})
-            .pipe(tap((user)=>this.user$$.next(user)));
+            .pipe(tap((user)=>this.user$$.next(user)
+            ));
     }
 
     getProfile(){
         return this.http
             .get<UserForAuth>('/api/users/me')
+            .pipe(tap((user)=>this.user$$.next(user)));
+    }
+
+    getUser(id:string){
+        return this.http
+            .get<UserForAuth>(`/api/users/${id}`)
             .pipe(tap((user)=>this.user$$.next(user)));
     }
 

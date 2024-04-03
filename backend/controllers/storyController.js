@@ -18,6 +18,7 @@ const createStory = asyncHandler(async (req, res) => {
 
   const story = await Story.create({
     title: req.body.title,
+    description: req.body.description,
     creator: req.user.id,
     characters: setUpCharacterList(req.body.characters),
     thumbnail,

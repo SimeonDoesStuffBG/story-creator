@@ -11,6 +11,10 @@ const storySchema = mongoose.Schema(
       type: String,
       required: [true, ["Story must have a title"]],
     },
+    description: {
+      type: String,
+      required: false,
+    },
     characters: {
       type: [mongoose.Schema.Types.ObjectId],
       required: false,

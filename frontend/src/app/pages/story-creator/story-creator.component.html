@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="createStory()">
+    <h2>Create Story</h2>
+    <div>
+        <input 
+        type="text" 
+        name="title" 
+        id="title" 
+        placeholder="Enter Title" 
+        formControlName="title"
+        />
+        <ng-container *ngIf="form.get('title')?.touched">
+            <p *ngIf="form.get('title')?.errors?.['required']">Title is required</p>
+            <p *ngIf="form.get('title')?.errors?.['minlength'] || form.get('title')?.errors?.['maxlength']">Title must be between 5 and 30 characters</p>
+        </ng-container>
+    </div>
+    <div>
+        <textarea 
+        name="description" 
+        id="description" 
+        placeholder="Enter Description(optional)" 
+        formControlName="description"
+        ></textarea>
+    </div>
+
+    <button
+        [disabled]="form.invalid"
+        [style]="{backgroundColor: form.invalid?'gray':'blue'}"
+    >
+        Create Story
+    </button>
+
+</form>

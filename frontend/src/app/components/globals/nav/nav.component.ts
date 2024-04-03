@@ -14,8 +14,12 @@ export class NavComponent {
  }
 
  get username():string{
-  //console.log(this.userService.user)
   return this.userService.user?.name||"";
+ }
+
+ get userId(): string{
+  let userId = this.userService.user?._id||""
+  return `/user/${userId}`;
  }
 
  constructor(private router:Router, private userService: UserService){}

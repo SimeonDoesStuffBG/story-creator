@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { matchPasswordsValidator } from 'src/app/helpers/match-password-validator';
 import { UserService } from '../user.service';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   form:FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(5)]],
     email: ['', [Validators.required]],
@@ -50,5 +50,11 @@ export class RegisterComponent {
       .subscribe(()=>{
         this.router.navigate(['/login']);
       })
+  }
+
+  ngOnInit(): void {
+    if(this.userService.user){
+      this.router.navigate(['/']);
+    }
   }
 }
