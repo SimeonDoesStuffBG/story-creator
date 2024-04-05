@@ -111,8 +111,9 @@ const checkUser = asyncHandler(async (req, res) => {
 
   const image = await imageModel.findById(user.icon);
   res.status(200).json({
-    id: user._id,
+    _id: user._id,
     name: user.name,
+    email: user.email,
     icon: image ? image.file : undefined,
   });
 });
@@ -122,7 +123,30 @@ const checkUser = asyncHandler(async (req, res) => {
 //@access private
 const checkMe = asyncHandler(async (req, res) => {
   const user = req.user;
+
   res.status(200).json(user);
 });
 
-module.exports = { createUser, logInUser, checkUsers, checkUser, checkMe };
+const logoutUser = asyncHandler(async (req, res) => {
+  try {
+    res
+      .clearCookie(authCookieName, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      })
+      .status(204)
+      .json({ message: "Cookie Deleted" });
+  } catch (err) {
+    throw err;
+  }
+});
+
+module.exports = {
+  createUser,
+  logInUser,
+  checkUsers,
+  checkUser,
+  checkMe,
+  logoutUser,
+};

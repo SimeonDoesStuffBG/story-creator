@@ -1,2 +1,3 @@
 <h1 *ngIf="user">This is {{user.name}}'s profile</h1>
-<h1 *ngIf="!user">This user does not exist. <a routerLink="/try">Try again!</a></h1>
+<app-story-list [forUser]="userId"></app-story-list>
+<h1 *ngIf="!user">This user does not exist. <a routerLink="/login">Try again!</a></h1>

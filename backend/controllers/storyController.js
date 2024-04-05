@@ -42,6 +42,8 @@ const viewStories = asyncHandler(async (req, res) => {
     });
   }
 
+  stories.sort((story1, story2) => story2.createdAt - story1.createdAt);
+
   res.status(200).json(stories);
 });
 
@@ -59,7 +61,13 @@ const viewStory = asyncHandler(async (req, res) => {
 
   const image = await imageModel.findById(story.thumbnail);
 
-  res.status(200).json({ ...story, thumbnail: image ? image.file : undefined });
+  res.status(200).json({
+    title: story.title,
+    creator: story.creator,
+    description: story.description,
+    characters: story.characters,
+    thumbnail: image ? image.file : undefined,
+  });
 });
 
 //@desc modify a story

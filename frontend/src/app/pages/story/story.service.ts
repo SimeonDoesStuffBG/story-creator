@@ -23,9 +23,25 @@ export class StoryService implements OnDestroy{
             .pipe(tap((story)=>this.story$$.next(story)));
     }
 
-    viewStories(){
+    viewStories(userId=""){
+        let url:string ='stories';
+        if(userId.length>0){
+            url=`users/${userId}/stories`;
+        }
         return this.http
-            .get<Story[]>('/api/stories');
+            .get<Story[]>(`/api/${url}`);
+    }
+
+    editStory(id:string, title:string, description:string){
+        return this.http
+            .put<Story>(`/api/stories/${id}`, {title, description})
+            .pipe(tap((story)=>this.story$$.next(story)));
+    }
+
+    viewStory(id:string){
+        return this.http
+            .get<Story>(`/api/stories/${id}`)
+            .pipe(tap((story)=>this.story$$.next(story)));
     }
 
     ngOnDestroy(): void {

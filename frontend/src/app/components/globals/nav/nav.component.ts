@@ -18,11 +18,15 @@ export class NavComponent {
  }
 
  get userId(): string{
-  let userId = this.userService.user?._id||""
+  let userId = this.userService.user?._id||"";
   return `/user/${userId}`;
  }
 
  constructor(private router:Router, private userService: UserService){}
 
-
+ logout():void{
+    this.userService.logout().subscribe({
+      next:()=>this.router.navigate(['/'])
+    });
+}
 }

@@ -6,3 +6,7 @@ export interface UserForAuth{
     _id: string
 }
 
+export interface UserInfo{
+    name:string,
+    id: string
+}

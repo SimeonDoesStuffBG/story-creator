@@ -9,7 +9,7 @@ import { UserModule } from './pages/user/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
 import { appInterceptorProvider } from './app.interceptors';
-import { StoryModule } from './components/story/story.module';
+import { StoryModule } from './pages/story/story.module';
 
 @NgModule({
   declarations: [

@@ -4,5 +4,6 @@
 <a routerLink="/register">register</a>
 </ng-container>
 <ng-container *ngIf="userLoggedIn">
+    <button (click)="logout()">log out</button>
     <p>Welcome, <a [routerLink]="userId">{{username}}</a></p>
 </ng-container>

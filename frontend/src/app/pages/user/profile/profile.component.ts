@@ -9,17 +9,21 @@ import { UserService } from '../user.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit{
+  userId: string = "";
   user = {} as UserForAuth;
 
-  constructor(private userService: UserService ,private activeRoute:ActivatedRoute){}
+  constructor(private userService: UserService ,private activeRoute:ActivatedRoute){
+  }
 
   ngOnInit():void{
     this.activeRoute.params.subscribe((data)=>{
-      const id = data['userId'];
+      this.userId = data['userId'];
       
-      this.userService.getUser(id).subscribe((user)=>{
+      this.userService.viewUser(this.userId).subscribe((user)=>{
         this.user = user;
       })
     })
+
+    
   }
 }

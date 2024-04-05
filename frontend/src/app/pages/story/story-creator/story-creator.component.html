@@ -1,5 +1,5 @@
-<form [formGroup]="form" (ngSubmit)="createStory()">
-    <h2>Create Story</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>{{headerText}} story</h2>
     <div>
         <input 
         type="text" 
@@ -26,7 +26,7 @@
         [disabled]="form.invalid"
         [style]="{backgroundColor: form.invalid?'gray':'blue'}"
     >
-        Create Story
+        {{btnText}}
     </button>
 
 </form>

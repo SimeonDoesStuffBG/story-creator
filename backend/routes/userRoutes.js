@@ -6,6 +6,7 @@ const {
   checkUser,
   checkMe,
   checkUsers,
+  logoutUser,
 } = require("../controllers/userController");
 const { viewCharacters } = require("../controllers/characterController");
 const { viewStories } = require("../controllers/storyController");
@@ -15,6 +16,8 @@ const router = express.Router();
 router.post("/", createUser);
 
 router.post("/login", logInUser);
+
+router.post("/logout", logoutUser);
 
 router.get("/me", authenticateToken, checkMe);
 
