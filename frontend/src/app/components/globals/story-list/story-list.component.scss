@@ -1,0 +1,18 @@
+section.story-list{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 5px;
+    background-color: lightgray;
+    padding: 10px;
+
+    a{
+        background-color: lightblue;
+        border-radius: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        color: gray;
+        text-decoration: none;
+    }
+}

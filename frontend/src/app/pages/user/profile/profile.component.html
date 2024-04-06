@@ -1,8 +1,10 @@
 <h1 *ngIf="user">This is {{user.name}}'s profile</h1>
 
 <section class="stories">
+    <h3>Stories</h3>
     <app-story-list [forUser]="userId"></app-story-list>
 </section>
 <section class="characters">
+    <h3>Characters</h3>
     <app-character-list [forUser]="userId"></app-character-list>
 </section>

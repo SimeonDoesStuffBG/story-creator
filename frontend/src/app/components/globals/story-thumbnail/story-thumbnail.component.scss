@@ -1,0 +1,22 @@
+.container{
+    background-color: rgb(241, 213, 213);
+    border: 1px solid gray;
+    border-radius: 10%;
+    padding: 5px 15px;
+    a{
+        text-decoration: none;
+        color:black;
+    }
+
+    a:hover{
+        color:blue;
+    }
+
+    a:active{
+        color:purple;
+    }
+
+    *{
+        text-align: center;
+    }
+}

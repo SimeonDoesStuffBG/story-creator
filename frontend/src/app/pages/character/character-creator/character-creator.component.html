@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2>Create Character</h2>
+    <h2>{{headerTxt}}</h2>
     <div>
         <input 
         type="text" 
@@ -10,7 +10,6 @@
         />
         <ng-container *ngIf="form.get('name')?.touched">
             <p *ngIf="form.get('name')?.errors?.['required']">Character Name is required</p>
-            <!--p *ngIf="form.get('name')?.errors?.['minlength'] || form.get('title')?.errors?.['maxlength']">Title must be between 5 and 30 characters</p>-->
         </ng-container>
     </div>
     <div>
@@ -26,6 +25,6 @@
         [disabled]="form.invalid"
         [style]="{backgroundColor: form.invalid?'gray':'blue'}"
     >
-        Create character
+        {{btnText}}
     </button>
 </form>

@@ -1,5 +1,7 @@
-<a [routerLink]="storyId">
-    <h3>{{story.title}}</h3>
-    <p>{{creator}}</p>
-    <p>{{story.createdAt | elapsedTime}}</p>
-</a>
+<div class="container">
+    <a [routerLink]="storyId" title="navigate to Story">
+        <h3>{{story.title}}</h3>
+        <p>{{creator}}</p>
+        <p>{{story.createdAt | elapsedTime}}</p>
+    </a>
+</div>

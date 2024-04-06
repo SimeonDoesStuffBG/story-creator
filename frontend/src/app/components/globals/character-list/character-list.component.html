@@ -1,1 +1,4 @@
-<a *ngIf="canAddChars" routerLink="/character/create"><button>Create new character</button></a>
+<section class="character-list">
+    <a *ngIf="canAddChars" routerLink="/character/create">New character</a>
+    <app-character-thumbnail *ngFor="let character of characters" [character]="character"></app-character-thumbnail>
+</section>

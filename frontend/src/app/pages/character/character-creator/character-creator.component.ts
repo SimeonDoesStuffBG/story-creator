@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterService } from '../character.service';
+import { UserService } from '../../user/user.service';
 
 @Component({
   selector: 'app-character-creator',
@@ -9,13 +10,17 @@ import { CharacterService } from '../character.service';
   styleUrls: ['./character-creator.component.scss']
 })
 export class CharacterCreatorComponent implements OnInit{
+  charId: string = "";
+  headerTxt:string = "Create character"
+  btnText:string = "Create character"
+  isEdit:boolean = false;
   
   form: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     description: ['']
   })
 
-  constructor(private activeRoute:ActivatedRoute, private characterService:CharacterService, private router:Router, private fb:FormBuilder){}
+  constructor(private activeRoute:ActivatedRoute, private characterService:CharacterService, private router:Router, private fb:FormBuilder, private userService: UserService){}
 
   onSubmit():void{
     if(this.form.invalid){
@@ -24,20 +29,45 @@ export class CharacterCreatorComponent implements OnInit{
 
     const {name, description} = this.form.value;
 
-    this.createCharacter(name,description);
+    if(this.isEdit){
+      this.editCharacter(this.charId, name, description);
+    }else{
+      this.createCharacter(name,description);  
+    }
+  }
+  private createCharacter(name: string, description: string):void{
+    if(this.form.invalid){
+      return
+    }
+    
+    this.characterService.createCharacter(name,description).subscribe((character)=>this.router.navigate(['/']));
   }
 
-  createCharacter(name: string, description: string):void{
+  private editCharacter(charId:string, name:string, description: string):void{
     if(this.form.invalid){
       return
     }
 
-    this.characterService.createCharacter(name,description).subscribe((character)=>this.router.navigate(['/']));
+    this.characterService.editCharacter(charId, name, description)
   }
 
   ngOnInit():void{
-    // this.activeRoute.params.subscribe((data)=>{
-    //   console.log(data['charId']);
-    // })
+    if(!this.userService.isLogged){
+      this.router.navigate(['/']);
+    }
+
+    this.activeRoute.params.subscribe((data)=>{
+      this.charId = data['charId'];
+
+      if(this.charId.length>0){
+        this.headerTxt = "Edit character"
+        this.btnText = "Save changes"
+        this.isEdit = true;
+
+        this.characterService.viewCharacter(this.charId).subscribe((char)=>{
+          this.form.setValue({name:char.name, description: char.description});
+        })
+      }
+    })
   }
 }

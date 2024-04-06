@@ -55,9 +55,14 @@ const viewCharacter = asyncHandler(async (req, res) => {
 
   let image = await imageModel.findById(character.image);
 
-  res
-    .status(200)
-    .json({ ...character, thumbnail: image ? image.file : undefined });
+  res.status(200).json({
+    _id: character._id,
+    name: character.name,
+    creator: character.creator,
+    description: character.description,
+    createdAt: character.createdAt,
+    thumbnail: image ? image.file : undefined,
+  });
 });
 
 //@desc modify a certain character

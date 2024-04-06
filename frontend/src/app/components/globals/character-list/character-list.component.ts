@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { CharacterService } from 'src/app/pages/character/character.service';
 import { UserService } from 'src/app/pages/user/user.service';
 import { Character } from 'src/app/types/character';
 
@@ -7,7 +8,7 @@ import { Character } from 'src/app/types/character';
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.scss']
 })
-export class CharacterListComponent {
+export class CharacterListComponent implements OnInit, OnChanges{
   @Input({required:true})forUser: string='';
   characters: Character[]|null = [];
 
@@ -18,6 +19,19 @@ export class CharacterListComponent {
     return userIsLoggedIn && (!hasUser || isThisUser)
   }
 
-  constructor(private userService:UserService){}
+  constructor(private userService:UserService, private characterService:CharacterService){}
 
+  reloadCharacters():void{
+    this.characterService.viewCharacters(this.forUser).subscribe(characters=>{
+      this.characters = [...characters];
+    })
+  }
+
+  ngOnInit(): void {
+    this.reloadCharacters();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.reloadCharacters();
+  }
 }
