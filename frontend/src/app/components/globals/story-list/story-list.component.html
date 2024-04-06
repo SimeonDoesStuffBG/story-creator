@@ -1,4 +1,4 @@
 <section class="story-list">
-    <a *ngIf="canAddStory" routerLink="/story-creator" title="Create a new Story"><button>+</button></a>
+    <a *ngIf="canAddStory" routerLink="/story/create" title="Create a new Story"><button>New Story</button></a>
     <app-story-thumbnail *ngFor="let story of stories" [story]="story"/>
 </section>

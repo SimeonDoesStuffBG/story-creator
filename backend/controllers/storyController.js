@@ -60,12 +60,12 @@ const viewStory = asyncHandler(async (req, res) => {
   }
 
   const image = await imageModel.findById(story.thumbnail);
-
   res.status(200).json({
     title: story.title,
     creator: story.creator,
     description: story.description,
     characters: story.characters,
+    createdAt: story.createdAt,
     thumbnail: image ? image.file : undefined,
   });
 });

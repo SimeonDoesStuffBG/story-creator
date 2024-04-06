@@ -4,10 +4,9 @@ import { StoryPageComponent } from "src/app/pages/story/story-page/story-page.co
 import { StoryCreatorComponent } from "./story-creator/story-creator.component";
 
 const routes: Routes =[
-    {path: 'story', children:[
-        {path: ':storyId', pathMatch: 'full', component: StoryPageComponent},
-        {path: ':storyId/edit', component: StoryCreatorComponent}
-    ]}
+    {path: 'create', component: StoryCreatorComponent},
+    {path: ':storyId/edit', component: StoryCreatorComponent},
+    {path: ':storyId', /*pathMatch: 'full',*/ component: StoryPageComponent},
 ]
 @NgModule({
     imports: [RouterModule.forChild(routes)],

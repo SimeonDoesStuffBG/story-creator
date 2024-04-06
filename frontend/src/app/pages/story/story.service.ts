@@ -1,26 +1,15 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject, Subscription, tap } from "rxjs";
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Story } from "src/app/types/story";
 
 @Injectable({providedIn:'root'})
-export class StoryService implements OnDestroy{
-    private story$$ = new BehaviorSubject<Story|undefined>(undefined);
-    private story$ = this.story$$.asObservable();
-
-    story: Story|undefined;
-    STORY_KEY = '[story]';
-
-    storySubscription: Subscription;
-
+export class StoryService{
     constructor(private http:HttpClient){
-        this.storySubscription = this.story$.subscribe((story)=>this.story = story);
     }
 
-    createStory(title:string, description:string, creator:string){
+    createStory(title:string, description:string){
         return this.http
-            .post<Story>('/api/stories', {title, description, creator})
-            .pipe(tap((story)=>this.story$$.next(story)));
+            .post<Story>('/api/stories', {title, description})
     }
 
     viewStories(userId=""){
@@ -34,17 +23,11 @@ export class StoryService implements OnDestroy{
 
     editStory(id:string, title:string, description:string){
         return this.http
-            .put<Story>(`/api/stories/${id}`, {title, description})
-            .pipe(tap((story)=>this.story$$.next(story)));
+            .put<Story>(`/api/stories/${id}`, {title, description});
     }
 
     viewStory(id:string){
         return this.http
-            .get<Story>(`/api/stories/${id}`)
-            .pipe(tap((story)=>this.story$$.next(story)));
-    }
-
-    ngOnDestroy(): void {
-        this.storySubscription.unsubscribe();
+            .get<Story>(`/api/stories/${id}`);
     }
 }

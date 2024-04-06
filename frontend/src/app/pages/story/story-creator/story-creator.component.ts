@@ -10,10 +10,6 @@ import { StoryService } from 'src/app/pages/story/story.service';
   styleUrls: ['./story-creator.component.scss']
 })
 export class StoryCreatorComponent implements OnInit{
-  get user(){
-    return this.userService.user?._id||'';
-  }
-
   isEdit: boolean = false;
   storyId: string = '';
   headerText:string = '';
@@ -54,10 +50,8 @@ export class StoryCreatorComponent implements OnInit{
       return
     }   
 
-    const creator = this.user;
-
     this.storyService
-      .createStory(title, description, creator)
+      .createStory(title, description)
       .subscribe((story)=>{
         this.router.navigate([`/story/${story._id}`]);
       })
@@ -76,7 +70,7 @@ export class StoryCreatorComponent implements OnInit{
   ngOnInit(): void {
     this.activeRoute.params.subscribe(data=>{
       this.storyId = data['storyId'];
-      
+      console.log(data);
       if(this.storyId){
         this.storyService.viewStory(this.storyId).subscribe(story=>{
           this.form.setValue({title:story.title, description: story.description});
@@ -90,8 +84,8 @@ export class StoryCreatorComponent implements OnInit{
           this.btnText = 'Create Story';
       }
     })
-    if(this.user===''){
-      this.router.navigate(['/login']);
+    if(!this.userService.isLogged){
+      this.router.navigate(['/user/login']);
     }
   }
 }

@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GlobalsModule } from './components/globals/globals.module';
 import { PagesModule } from './pages/pages.module';
-import { UserModule } from './pages/user/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
 import { appInterceptorProvider } from './app.interceptors';
@@ -22,8 +21,6 @@ import { StoryModule } from './pages/story/story.module';
     AppRoutingModule,
     GlobalsModule,
     PagesModule,
-    UserModule,
-    StoryModule
   ],
   providers: [appInterceptorProvider],
   bootstrap: [AppComponent]

@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Create Character</h2>
+    <div>
+        <input 
+        type="text" 
+        name="name" 
+        id="name" 
+        placeholder="Enter Name" 
+        formControlName="name"
+        />
+        <ng-container *ngIf="form.get('name')?.touched">
+            <p *ngIf="form.get('name')?.errors?.['required']">Character Name is required</p>
+            <!--p *ngIf="form.get('name')?.errors?.['minlength'] || form.get('title')?.errors?.['maxlength']">Title must be between 5 and 30 characters</p>-->
+        </ng-container>
+    </div>
+    <div>
+        <textarea 
+        name="description" 
+        id="description" 
+        placeholder="Enter Description(optional)" 
+        formControlName="description"
+        ></textarea>
+    </div>
+
+    <button
+        [disabled]="form.invalid"
+        [style]="{backgroundColor: form.invalid?'gray':'blue'}"
+    >
+        Create character
+    </button>
+</form>

@@ -1,5 +1,5 @@
 <h1>{{story.title}}</h1>
-<p>Created by <a [routerLink]="userLink">{{creator}}</a></p>
+<p>Created by <a [routerLink]="userLink">{{creator}}</a> {{story.createdAt | elapsedTime}}</p>
 <p>{{story.description}}</p>
 
 <a *ngIf="isCreator" [routerLink]="['./edit']"><button>Edit Story</button></a>

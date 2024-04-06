@@ -1,7 +1,7 @@
 <a routerLink="/">home</a>
 <ng-container *ngIf="!userLoggedIn">
-|<a routerLink="/login">login</a>|
-<a routerLink="/register">register</a>
+|<a routerLink="/user/login">login</a>|
+<a routerLink="/user/register">register</a>
 </ng-container>
 <ng-container *ngIf="userLoggedIn">
     <button (click)="logout()">log out</button>
